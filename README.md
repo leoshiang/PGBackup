@@ -84,7 +84,7 @@ npm install -g pkg
 
 1. 前往 VerMgr 下載最新的執行檔。
 
-> https://github.com/leoshiang/PGBackup/releases
+> https://github.com/leoshiang/VerMgr/releases
 
 2. 在此 repo. 建立 VerMgr 目錄。
 3. 將下載的 vermgr-win-x64-x.x.x-PROD-YYYYMMDD.exe 放在 VerMgr目錄。
