@@ -6,6 +6,11 @@
 
 git clone https://github.com/leoshiang/PGBackup
 
+## 安裝 node.js 套件
+
+```bash
+npm i
+```
 ## 修改權限
 
 如果是 linux 系統，請用以下指令修改執行權限
@@ -15,6 +20,17 @@ chmod +x PGBackup.js
 ```
 
 ## 修改設定檔
+
+Linux 系統請用以下指令建立設定檔
+
+```bash
+cp .env.sample .env
+```
+
+Windows 系統請用以下指令建立設定檔 
+```bash
+copy .env.sample .env
+```
 
 使用文字編輯器修改 .env 檔案
 
@@ -79,6 +95,5 @@ node PGBackup.js
 Linux
 
 ```bash
-./PGBackup.js
+sudo ./PGBackup.js
 ```
-

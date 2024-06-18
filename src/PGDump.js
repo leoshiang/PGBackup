@@ -21,6 +21,7 @@ class PGDump {
         } catch (error) {
             stopExecution('無法執行 pg_dump!' + error)
         }
+        console.log('pg_dump 存在且可以執行...')
     }
 
     /**
