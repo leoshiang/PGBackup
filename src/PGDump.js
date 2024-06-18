@@ -43,7 +43,7 @@ class PGDump {
     export (config, dbName, outputFileName) {
         const command = 'pg_dump --dbname=postgresql://'
             + `${config.dbUserName}:${config.dbPassword}`
-            + `@${config.dbHost}:${config.dbPort}/${config.dbName}`
+            + `@${config.dbHost}:${config.dbPort}/${encodeURI(dbName)}`
             + ` -f ${outputFileName}`
             + this._getCompressionOption(config)
         try {
