@@ -61,7 +61,9 @@ class BackupAction {
         for (let i = 0; i < this._ListOfDbToBackup.length; i++) {
             const dbName = this._ListOfDbToBackup[i]
             const outputFileName = this._getOutputFileName(dbName)
+            console.log(`正在備份資料庫 ${dbName}...`)
             PGDump.export(this._config, dbName, outputFileName)
+            console.log(`資料庫 ${dbName} 已備份到 ${outputFileName}。`)
         }
     }
 
