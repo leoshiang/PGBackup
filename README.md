@@ -2,37 +2,9 @@
 
 這是一個備份 PostgreSQL 的小工具，支援 Windows/Linux/MacOS。
 
-## 下載程式
+## 建立 .env 檔案
 
-git clone https://github.com/leoshiang/PGBackup
-
-## 安裝 node.js 套件
-
-```bash
-npm i
-```
-## 修改權限
-
-如果是 linux 系統，請用以下指令修改執行權限
-
-```bash
-chmod +x PGBackup.js
-```
-
-## 修改設定檔
-
-Linux 系統請用以下指令建立設定檔
-
-```bash
-cp .env.sample .env
-```
-
-Windows 系統請用以下指令建立設定檔 
-```bash
-copy .env.sample .env
-```
-
-使用文字編輯器修改 .env 檔案
+使用文字編輯器建立 .env 檔案
 
 ```
 # 備份之後要執行的指令
@@ -77,23 +49,54 @@ MONTHLY_BACKUP_AT=1
 # 月備份保留週期，以月計算，3 代表保留3個月前到這個月的備份。
 MONTHLY_BACKUP_RETENTION_PERIOD=3
 
-# 在星期幾進行周備份。 1 = 代表星期一
+# 在星期幾進行週備份。 1 = 代表星期一
 WEEKLY_BACKUP_AT=1
 
-# 周備份保留週期，以周計算，4 代表保留4周前到這周的備份。
+# 週備份保留週期，以週計算，4 代表保留4週前到這週的備份。
 WEEKLY_BACKUP_RETENTION_PERIOD=4
 ```
 
 ## 執行程式
 
+將執行檔與 .nev 放在同一個目錄。
+
 Windows
 
 ```
-node PGBackup.js
+PGBackup
 ```
 
 Linux
 
 ```bash
-sudo ./PGBackup.js
+sudo ./PGBackup
 ```
+
+## 安裝建置執行檔時所需軟體
+
+### pkg
+
+```bash
+npm install -g pkg
+```
+
+### VerMgr
+
+1. 前往 VerMgr 下載最新的執行檔。
+
+> https://github.com/leoshiang/PGBackup/releases
+
+2. 在此 repo. 建立 VerMgr 目錄。
+3. 將下載的 vermgr-win-x64-x.x.x-PROD-YYYYMMDD.exe 放在 VerMgr目錄。
+4. 將 vermgr-win-x64-x.x.x-PROD-YYYYMMDD.exe 更名為 vermgr.exe。
+
+## 建置執行檔
+
+目前僅支援在 Windows 作業系統建置。
+
+```bash
+npm run build
+```
+
+輸出檔案會產生在 release 目錄裡面。
+

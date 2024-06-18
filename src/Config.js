@@ -43,6 +43,13 @@ class Config {
         this._dbBackupList = ''
 
         /**
+         * 要排除的資料庫名稱列表
+         * @type {string}
+         * @private
+         */
+        this._dbExcludeList = ''
+
+        /**
          * 資料庫主機
          * @type {string}
          * @private
@@ -106,21 +113,21 @@ class Config {
         this._monthlyBackupRetentionPeriod = 3
 
         /**
-         * 周備份在星期幾執行。1=星期一，2=星期二...
+         * 週備份在星期幾執行。1=星期一，2=星期二...
          * @type {number}
          * @private
          */
         this._weeklyBackupAt = 7
 
         /**
-         * 周備份目錄
+         * 週備份目錄
          * @type {string}
          * @private
          */
         this._weeklyBackupDir = ''
 
         /**
-         * 周備份備份保留期間(周)
+         * 週備份備份保留期間(週)
          * @type {number}
          * @private
          */
@@ -151,6 +158,14 @@ class Config {
         this._beforeBackupScript = value
     }
 
+    get compressOutputFile () {
+        return this._doCompress
+    }
+
+    set compressOutputFile (value) {
+        this._doCompress = value
+    }
+
     get dailyBackupDir () {
         return this._dailyBackupDir
     }
@@ -173,6 +188,14 @@ class Config {
 
     set dbBackupList (value) {
         this._dbBackupList = value
+    }
+
+    get dbExcludeList () {
+        return this._dbExcludeList
+    }
+
+    set dbExcludeList (value) {
+        this._dbExcludeList = value
     }
 
     get dbHost () {
@@ -213,14 +236,6 @@ class Config {
 
     set dbUserName (value) {
         this._dbUserName = value
-    }
-
-    get compressOutputFile () {
-        return this._doCompress
-    }
-
-    set compressOutputFile (value) {
-        this._doCompress = value
     }
 
     get monthlyBackupAt () {

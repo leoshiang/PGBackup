@@ -27,3 +27,5 @@ coverage
 *.sln
 *.sw?
 .env
+release/
+VerMgr/

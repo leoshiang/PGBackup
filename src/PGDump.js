@@ -8,6 +8,16 @@ class PGDump {
     }
 
     /**
+     *
+     * @param {Config} config
+     * @returns {string}
+     * @private
+     */
+    _getCompressionOption (config) {
+        return config.compressOutputFile ? ' --format=custom --compress=9 ' : ''
+    }
+
+    /**
      * 確認 PG_DUMP 可以執行。如果無法執行 PG_DUMP，就停止。
      */
     existenceCheck () {
@@ -22,16 +32,6 @@ class PGDump {
             stopExecution('無法執行 pg_dump!' + error)
         }
         console.log('pg_dump 存在且可以執行...')
-    }
-
-    /**
-     *
-     * @param {Config} config
-     * @returns {string}
-     * @private
-     */
-    _getCompressionOption (config) {
-        return config.compressOutputFile ? ' --format=custom --compress=9 ' : ''
     }
 
     /**
