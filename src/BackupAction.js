@@ -105,6 +105,7 @@ class BackupAction {
      * @return {void}
      */
     _deleteOldBackups () {
+        if (!this._isRetentionPeriodValid()) return
         const retentionStartDate = this._getRetentionStartDate()
         let files = fs.readdirSync(this._getBackupDirectory())
         let oldBackupFiles = files.filter(x => this._isOldBackupFile(x, retentionStartDate))
@@ -181,6 +182,15 @@ class BackupAction {
             process.exit(1)
         }
         return dbNameList
+    }
+
+    /**
+     * 檢查保留期間是否有效。
+     * @private
+     * @return {boolean}
+     */
+    _isRetentionPeriodValid() {
+        throw new Error('Method not implemented.')
     }
 
     /**

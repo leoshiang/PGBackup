@@ -27,9 +27,11 @@ class WeeklyBackupAction extends BackupAction {
      * @returns {string}
      */
     _getOutputFileName (dbName) {
-        const weekNumber = moment().isoWeek()
+        const today = new moment()
+        const year = today.year()
+        const weekNumber = today.isoWeek()
         return this._config.weeklyBackupDir + path.sep
-            + `week-${weekNumber}-`
+            + `week-${year}-${weekNumber}-`
             + dbName
             + (this._config.compressOutputFile ? '.gz' : '.sql')
     }
@@ -53,12 +55,24 @@ class WeeklyBackupAction extends BackupAction {
      * @return {boolean}
      */
     _isOldBackupFile (fileName, retentionStartDate) {
-        const regex = new RegExp('^week-(\\d+)-.*')
+        const regex = new RegExp('^week-(\\d+)-(\\d+)-.*')
         const match = regex.exec(fileName)
         if (!match) return false
-        const backupWeekNumber = match[1].toString()
+        const currentYear = moment().year()
+        const backupYear = match[1].toString()
+        const backupWeekNumber = match[2].toString()
         const retentionStartWeek = retentionStartDate.week()
-        return backupWeekNumber <= retentionStartWeek
+        return (backupWeekNumber <= retentionStartWeek) && backupYear <= currentYear
+    }
+
+    /**
+     * 檢查保留期間是否有效。
+     * @private
+     * @return {boolean}
+     */
+    _isRetentionPeriodValid () {
+        if (isNaN(this._config.weeklyBackupRetentionPeriod)) return false
+        return this._config.weeklyBackupRetentionPeriod > 0
     }
 }
 

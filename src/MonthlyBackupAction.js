@@ -27,9 +27,11 @@ class MonthlyBackupAction extends BackupAction {
      * @returns {string}
      */
     _getOutputFileName (dbName) {
-        const monthNumber = moment().month() + 1
+        const today = new moment()
+        const year = today.year()
+        const monthNumber = today.month() + 1
         return this._config.monthlyBackupDir + path.sep
-            + `month-${monthNumber}-`
+            + `month-${year}-${monthNumber}-`
             + dbName
             + (this._config.compressOutputFile ? '.gz' : '.sql')
     }
@@ -53,12 +55,22 @@ class MonthlyBackupAction extends BackupAction {
      * @return {boolean}
      */
     _isOldBackupFile (fileName, retentionStartDate) {
-        const regex = new RegExp('^month-(\\d+)-.*')
+        const regex = new RegExp('^month-(\\d+)-(\\d+)-.*')
         const match = regex.exec(fileName)
         if (!match) return false
         const backupMonthNumber = match[1].toString()
         const retentionStartMonth = retentionStartDate.month()
         return backupMonthNumber <= retentionStartMonth
+    }
+
+    /**
+     * 檢查保留期間是否有效。
+     * @private
+     * @return {boolean}
+     */
+    _isRetentionPeriodValid () {
+        if (isNaN(this._config.monthlyBackupRetentionPeriod)) return false
+        return this._config.monthlyBackupRetentionPeriod > 0
     }
 }
 

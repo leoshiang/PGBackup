@@ -58,6 +58,16 @@ class DailyBackupAction extends BackupAction {
         const backupDate = moment(match[1])
         return backupDate.isBefore(retentionStartDate)
     }
+
+    /**
+     * 檢查保留期間是否有效。
+     * @private
+     * @return {boolean}
+     */
+    _isRetentionPeriodValid () {
+        if (isNaN(this._config.dailyBackupRetentionPeriod)) return false
+        return this._config.dailyBackupRetentionPeriod > 0
+    }
 }
 
 module.exports = DailyBackupAction
