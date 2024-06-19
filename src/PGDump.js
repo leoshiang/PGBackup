@@ -1,5 +1,6 @@
 const { execSync } = require('child_process')
 const { stopExecution } = require('./Utils')
+const MessageService = require('./MessageService/MessageService')
 
 class PGDump {
 
@@ -31,7 +32,7 @@ class PGDump {
         } catch (error) {
             stopExecution('無法執行 pg_dump!' + error)
         }
-        console.log('pg_dump 存在且可以執行...')
+        MessageService.sendMessage('pg_dump 存在且可以執行...')
     }
 
     /**
@@ -49,7 +50,7 @@ class PGDump {
         try {
             execSync(command).toString()
         } catch (error) {
-            console.error(`備份 ${dbName} 時發生錯誤：${error}`)
+            MessageService.sendMessage(`備份 ${dbName} 時發生錯誤：${error}`)
         }
 
     }

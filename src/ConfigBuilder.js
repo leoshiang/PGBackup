@@ -11,8 +11,10 @@ class ConfigBuilder {
         const config = new Config()
         const backupDir = path.normalize(process.env['BACKUP_DIR'] || '')
         config.afterBackupScript = process.env['AFTER_BACKUP_SCRIPT']
+        config.afterBackupMessage = process.env['AFTER_BACKUP_MESSAGE']
         config.backupDirectory = path.join(path.dirname(backupDir), path.basename(backupDir))
         config.beforeBackupScript = process.env['BEFORE_BACKUP_SCRIPT']
+        config.beforeBackupMessage = process.env['BEFORE_BACKUP_MESSAGE']
         config.compressOutputFile = (process.env['COMPRESS_OUTPUT_FILE'] || '').toLowerCase() === 'yes'
         config.dailyBackupDir = path.join(config.backupDirectory, 'daily')
         config.dailyBackupRetentionPeriod = parseInt(process.env['DAILY_BACKUP_RETENTION_PERIOD'] || '0')
@@ -29,6 +31,8 @@ class ConfigBuilder {
         config.weeklyBackupAt = strToInt(process.env['WEEKLY_BACKUP_AT'])
         config.weeklyBackupDir = path.join(config.backupDirectory, 'weekly')
         config.weeklyBackupRetentionPeriod = strToInt(process.env['WEEKLY_BACKUP_RETENTION_PERIOD'])
+        config.telegramChatId = process.env['TG_CHAT_ID']
+        config.telegramToken = process.env['TG_TOKEN']
         return config
     }
 }

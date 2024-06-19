@@ -1,6 +1,13 @@
 class Config {
     constructor () {
         /**
+         *  備份之後要顯示的訊息
+         * @type {string}
+         * @private
+         */
+        this._afterBackupMessage = ''
+
+        /**
          *  備份之後要執行的指令
          * @type {string}
          * @private
@@ -13,6 +20,13 @@ class Config {
          * @private
          */
         this._backupDirectory = ''
+
+        /**
+         * 備份之前要顯示的訊息
+         * @type {null}
+         * @private
+         */
+        this._beforeBackupMessage = ''
 
         /**
          * 備份之前要執行的指令
@@ -132,6 +146,17 @@ class Config {
          * @private
          */
         this._weeklyBackupRetentionPeriod = 3
+
+        this._telegramToken = ''
+        this._telegramChatId = null
+    }
+
+    get afterBackupMessage () {
+        return this._afterBackupMessage
+    }
+
+    set afterBackupMessage (value) {
+        this._afterBackupMessage = value
     }
 
     get afterBackupScript () {
@@ -148,6 +173,14 @@ class Config {
 
     set backupDirectory (value) {
         this._backupDirectory = value
+    }
+
+    get beforeBackupMessage () {
+        return this._beforeBackupMessage
+    }
+
+    set beforeBackupMessage (value) {
+        this._beforeBackupMessage = value
     }
 
     get beforeBackupScript () {
@@ -260,6 +293,22 @@ class Config {
 
     set monthlyBackupRetentionPeriod (value) {
         this._monthlyBackupRetentionPeriod = value
+    }
+
+    get telegramChatId () {
+        return this._telegramChatId
+    }
+
+    set telegramChatId (value) {
+        this._telegramChatId = value
+    }
+
+    get telegramToken () {
+        return this._telegramToken
+    }
+
+    set telegramToken (value) {
+        this._telegramToken = value
     }
 
     get weeklyBackupAt () {

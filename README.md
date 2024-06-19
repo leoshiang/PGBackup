@@ -2,6 +2,22 @@
 
 這是一個備份 PostgreSQL 的小工具，支援 Windows/Linux/MacOS。
 
+## 使用 Telegram 傳送訊息
+
+### 下載檔案
+
+如果要用 Telegram 傳送訊息，請至 https://github.com/leoshiang/TGMsg/releases 下載 TGMsg 執行檔。
+
+### 重新命名
+
+如果你的作業系統是 Windows，請將下載檔案改名為 TGMsg.exe。
+如果你的作業系統是 Linux，請將下載檔案改名為 TGMsg。
+並將其所在位置加入環境變數 PATH。
+
+### Token 與 ChatId
+
+在 Telegram 建立 Bot 和 Channel，記下 TOKEN & CHAT_ID
+
 ## 建立 .env 檔案
 
 使用文字編輯器建立 .env 檔案
@@ -54,6 +70,9 @@ WEEKLY_BACKUP_AT=1
 
 # 週備份保留週期，以週計算，4 代表保留4週前到這週的備份。
 WEEKLY_BACKUP_RETENTION_PERIOD=4
+
+TG_TOKEN=
+TG_CHAT_ID=
 ```
 
 ## 執行程式

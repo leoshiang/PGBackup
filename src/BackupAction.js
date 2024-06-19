@@ -1,10 +1,9 @@
 const PGDump = require('./PGDump')
 const Utils = require('./Utils')
-const child_process = require('node:child_process')
 const fs = require('fs')
 const path = require('path')
 const { Client } = require('pg')
-
+const MessageService = require('./MessageService/MessageService')
 class BackupAction {
 
     /**
@@ -28,23 +27,19 @@ class BackupAction {
     }
 
     /**
-     * 執行備份之後的指令。
+     * 執行備份之後。
      * @protected
      * @return {void}
      */
     _afterExecute () {
-        if (!this._config.afterBackupScript) return
-        child_process.execSync(this._config.afterBackupScript)
     }
 
     /**
-     * 執行備份前的指令。
+     * 執行備份前。
      * @protected
      * @return {void}
      */
     _beforeExecute () {
-        if (!this._config.beforeBackupScript) return
-        child_process.execSync(this._config.beforeBackupScript)
     }
 
     /**
@@ -83,7 +78,7 @@ class BackupAction {
         try {
             fs.unlinkSync(filePath)
         } catch (err) {
-            console.error(err)
+            MessageService.sendMessage(err)
         }
     }
 
@@ -94,7 +89,7 @@ class BackupAction {
      * @return {void}
      */
     _deleteOldBackupFile (fileName) {
-        console.log(`刪除舊的備份檔案 ${fileName}。`)
+        MessageService.sendMessage(`刪除舊的備份檔案 ${fileName}。`)
         const filePath = this._getBackupDirectory() + path.sep + fileName
         this._deleteFile(filePath)
     }
@@ -122,9 +117,9 @@ class BackupAction {
         for (let i = 0; i < this._dbBackupList.length; i++) {
             const dbName = this._dbBackupList[i]
             const outputFileName = this._getOutputFileName(dbName)
-            console.log(`正在備份資料庫 ${dbName}...`)
+            MessageService.sendMessage(`正在備份資料庫 ${dbName}...`)
             PGDump.export(this._config, dbName, outputFileName)
-            console.log(`資料庫 ${dbName} 已備份到 ${outputFileName}。`)
+            MessageService.sendMessage(`資料庫 ${dbName} 已備份到 ${outputFileName}。`)
         }
     }
 
@@ -135,9 +130,9 @@ class BackupAction {
         const backupDirectory = this._getBackupDirectory()
         try {
             if (!fs.existsSync(backupDirectory)) {
-                console.log(`目錄 ${backupDirectory} 不存在，嘗試建立...`)
+                MessageService.sendMessage(`目錄 ${backupDirectory} 不存在，嘗試建立...`)
                 fs.mkdirSync(backupDirectory)
-                console.log(`已建立目錄 ${backupDirectory}。`)
+                MessageService.sendMessage(`已建立目錄 ${backupDirectory}。`)
             }
         } catch (err) {
             Utils.stopExecution(`建立 ${backupDirectory} 時發生錯誤：${err}`)
@@ -178,7 +173,7 @@ class BackupAction {
             dbNameList = result.rows.map(x => x.datname)
             client.end()
         } catch (error) {
-            console.error(error)
+            MessageService.sendMessage(error)
             process.exit(1)
         }
         return dbNameList
