@@ -149,6 +149,8 @@ class Config {
 
         this._telegramToken = ''
         this._telegramChatId = null
+        this._successEmoji = '💚'
+        this._errorEmoji = '💔'
     }
 
     get afterBackupMessage () {
@@ -271,6 +273,14 @@ class Config {
         this._dbUserName = value
     }
 
+    get errorEmoji () {
+        return this._errorEmoji
+    }
+
+    set errorEmoji (newValue) {
+        this._errorEmoji = newValue
+    }
+
     get monthlyBackupAt () {
         return this._monthlyBackupAt
     }
@@ -293,6 +303,14 @@ class Config {
 
     set monthlyBackupRetentionPeriod (value) {
         this._monthlyBackupRetentionPeriod = value
+    }
+
+    get successEmoji () {
+        return this._successEmoji
+    }
+
+    set successEmoji (newValue) {
+        this._successEmoji = newValue
     }
 
     get telegramChatId () {

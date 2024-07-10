@@ -118,8 +118,12 @@ class BackupAction {
             const dbName = this._dbBackupList[i]
             const outputFileName = this._getOutputFileName(dbName)
             MessageService.sendMessage(`正在備份資料庫 ${dbName}...`)
-            PGDump.export(this._config, dbName, outputFileName)
-            MessageService.sendMessage(`資料庫 ${dbName} 已備份到 ${outputFileName}。`)
+            const result = PGDump.export(this._config, dbName, outputFileName)
+            if (!result) {
+                MessageService.sendMessage(this._config.errorEmoji + `備份資料庫 ${dbName} 失敗。`)
+                continue
+            }
+            MessageService.sendMessage(this._config.successEmoji + `資料庫 ${dbName} 已備份到 ${outputFileName}。`)
         }
     }
 
@@ -180,15 +184,6 @@ class BackupAction {
     }
 
     /**
-     * 檢查保留期間是否有效。
-     * @private
-     * @return {boolean}
-     */
-    _isRetentionPeriodValid() {
-        throw new Error('Method not implemented.')
-    }
-
-    /**
      * 取得輸出檔案名稱
      * @param {string} dbName 資料庫名稱
      * @returns {string}
@@ -219,6 +214,15 @@ class BackupAction {
     }
 
     /**
+     * 檢查保留期間是否有效。
+     * @private
+     * @return {boolean}
+     */
+    _isRetentionPeriodValid() {
+        throw new Error('Method not implemented.')
+    }
+
+    /**
      * 解析設定檔的 DB_BACKUP_LIST 以取得資料庫備份清單。
      * @return {string[]}
      * @protected
@@ -231,7 +235,7 @@ class BackupAction {
 
     /**
      * 執行備份。
-     * @returns {Promise<void>}
+     * @returns {Promise<boolean>}
      */
     async execute () {
         try {
@@ -239,8 +243,10 @@ class BackupAction {
             await this._createDbBackupList()
             this._doBackup()
             this._deleteOldBackups()
-        } finally {
+            return true
+        } catch(error) {
             this._afterExecute()
+            return false
         }
     }
 }

@@ -49,8 +49,10 @@ class PGDump {
             + this._getCompressionOption(config)
         try {
             execSync(command).toString()
+            return true
         } catch (error) {
             MessageService.sendMessage(`備份 ${dbName} 時發生錯誤：${error}`)
+            return false
         }
 
     }
