@@ -1,22 +1,14 @@
 # PGBackup
 
 這是一個備份 PostgreSQL 的小工具，支援 Windows/Linux/MacOS。
+# 特色
 
-## 使用 Telegram 傳送訊息
+* 可以自行定義每日、每周和每月備份。
+* 可以自行定義備份資料夾。
+* 可以自行定義備份之前和備份之後的訊息。
+* 透過 Telegram 傳送訊息。 
 
-### 下載檔案
-
-如果要用 Telegram 傳送訊息，請至 https://github.com/leoshiang/TGMsg/releases 下載 TGMsg 執行檔。
-
-### 重新命名
-
-如果你的作業系統是 Windows，請將下載檔案改名為 TGMsg.exe。
-如果你的作業系統是 Linux，請將下載檔案改名為 TGMsg。
-並將其所在位置加入環境變數 PATH。
-
-### Token 與 ChatId
-
-在 Telegram 建立 Bot 和 Channel，記下 TOKEN & CHAT_ID
+# 使用方式
 
 ## 建立 .env 檔案
 
@@ -105,6 +97,8 @@ Linux
 sudo ./PGBackup test.ini
 ```
 
+# 開發
+
 ## 安裝建置執行檔時所需軟體
 
 ### pkg
@@ -125,7 +119,7 @@ npm install -g pkg
 
 ## 建置執行檔
 
-目前僅支援在 Windows 作業系統建置。
+> 目前僅支援在 Windows 作業系統建置。
 
 ```bash
 npm run build
@@ -133,3 +127,29 @@ npm run build
 
 輸出檔案會產生在 release 目錄裡面。
 
+# 使用 Telegram 傳送訊息
+
+## 下載檔案
+
+請至 https://github.com/leoshiang/TGMsg/releases 下載 TGMsg 執行檔。
+
+## 重新命名
+
+如果你的作業系統是 Windows，請將下載檔案改名為 TGMsg.exe。
+如果你的作業系統是 Linux，請將下載檔案改名為 TGMsg。
+並將其所在位置加入環境變數 PATH。
+
+## Token 與 ChatId
+
+在 Telegram 建立 Bot 和 Channel，記下 TOKEN & CHAT_ID
+
+## 修改 ini 檔案的 Messaging 區段
+將 Telegram Bot 的 Token 寫在 TG_TOKEN。
+將 Telegram 的 Channel Id 寫在 TG_CHAT_ID。
+
+```ini
+[Messaging]
+# Telegram 設定
+TG_TOKEN=
+TG_CHAT_ID=
+```
